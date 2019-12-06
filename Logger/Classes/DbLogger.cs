@@ -8,7 +8,7 @@ namespace Logger
         private static SqliteConnection connection;
         private bool disposed = false;
         private static DbLogger instance;
-        private ILogger _logger;
+        private ILogger logger;
 
         private DbLogger()
         {
@@ -27,7 +27,7 @@ namespace Logger
 
         private DbLogger(ILogger logger) : this()
         {
-            _logger = logger;
+            this.logger = logger;
         }
 
         public static DbLogger GetInstance(ILogger logger = null)
@@ -36,7 +36,7 @@ namespace Logger
             {
                 if (logger == null)
                 {
-                    instance._logger = null;
+                    instance.logger = null;
                 }
                 return instance;
             }
@@ -50,7 +50,7 @@ namespace Logger
             var command = new SqliteCommand(sqlExpression, connection);
             command.ExecuteNonQuery();
             command.Dispose();
-            _logger?.Error(message);
+            logger?.Error(message);
         }
 
         public void Error(Exception ex)
@@ -59,7 +59,7 @@ namespace Logger
             var command = new SqliteCommand(sqlExpression, connection);
             command.ExecuteNonQuery();
             command.Dispose();
-            _logger?.Error(ex);
+            logger?.Error(ex);
         }
 
         public void Info(string message)
@@ -68,7 +68,7 @@ namespace Logger
             var command = new SqliteCommand(sqlExpression, connection);
             command.ExecuteNonQuery();
             command.Dispose();
-            _logger?.Info(message);
+            logger?.Info(message);
         }
 
         public void Warning(string message)
@@ -77,7 +77,7 @@ namespace Logger
             var command = new SqliteCommand(sqlExpression, connection);
             command.ExecuteNonQuery();
             command.Dispose();
-            _logger?.Warning(message);
+            logger?.Warning(message);
         }
 
         public void Dispose()

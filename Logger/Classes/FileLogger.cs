@@ -9,7 +9,7 @@ namespace Logger
         private static StreamWriter streamWriter;
         private bool disposed;
         private static FileLogger instance;
-        private ILogger _logger;
+        private ILogger logger;
 
         private FileLogger()
         {
@@ -20,7 +20,7 @@ namespace Logger
 
         private FileLogger(ILogger logger) : this()
         {
-            _logger = logger;
+            this.logger = logger;
         }
 
         public static FileLogger GetInstance(ILogger logger = null)
@@ -29,7 +29,7 @@ namespace Logger
             {
                 if (logger == null)
                 {
-                    instance._logger = null;
+                    instance.logger = null;
                 }
                 return instance;
             }
@@ -41,28 +41,28 @@ namespace Logger
         {
             streamWriter.WriteLine($"Error: {message}");
             streamWriter.Flush();
-            _logger?.Error(message);
+            logger?.Error(message);
         }
 
         public void Error(Exception ex)
         {
             streamWriter.WriteLine($"Error exception: {ex?.Message}");
             streamWriter.Flush();
-            _logger?.Error(ex);
+            logger?.Error(ex);
         }
 
         public void Info(string message)
         {
             streamWriter.WriteLine($"Info: {message}");
             streamWriter.Flush();
-            _logger?.Info(message);
+            logger?.Info(message);
         }
 
         public void Warning(string message)
         {
             streamWriter.WriteLine($"Warning: {message}");
             streamWriter.Flush();
-            _logger?.Warning(message);
+            logger?.Warning(message);
         }
 
         public void Dispose()
@@ -81,7 +81,7 @@ namespace Logger
             }
             streamWriter?.Close();
             streamWriter?.Dispose();
-            _logger?.Dispose();
+            logger?.Dispose();
             disposed = true;
         }
 

@@ -4,7 +4,7 @@ namespace Logger.Classes
 {
     public class ConsoleLogger : ILogger
     {
-        private readonly ILogger _logger;
+        private readonly ILogger logger;
         private bool disposed = false;
 
         public ConsoleLogger()
@@ -13,31 +13,31 @@ namespace Logger.Classes
 
         public ConsoleLogger(ILogger logger)
         {
-            _logger = logger;
+            this.logger = logger;
         }
 
         public void Error(string message)
         {
             Console.WriteLine($"Log {DateTime.Now:s} Error: {message}");
-            _logger?.Error(message);
+            logger?.Error(message);
         }
 
         public void Error(Exception ex)
         {
             Console.WriteLine($"Log {DateTime.Now:s} Error exception: {ex?.Message}");
-            _logger?.Error(ex);
+            logger?.Error(ex);
         }
 
         public void Info(string message)
         {
             Console.WriteLine($"Log {DateTime.Now:s} Info: {message}");
-            _logger?.Info(message);
+            logger?.Info(message);
         }
 
         public void Warning(string message)
         {
             Console.WriteLine($"Log {DateTime.Now:s} Warning: {message}");
-            _logger?.Warning(message);
+            logger?.Warning(message);
         }
 
         public void Dispose()
@@ -54,7 +54,7 @@ namespace Logger.Classes
             if (disposing)
             {
             }
-            _logger?.Dispose();
+            logger?.Dispose();
         }
 
         ~ConsoleLogger()
